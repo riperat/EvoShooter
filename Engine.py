@@ -4,11 +4,11 @@ import pygame
 
 import sys
 
-import Menus
+from screen import Menus
 from Collision import Collision
-from Enemy import Enemy
-from Player import Player
-from Projectile import Projectile
+from entities.Enemy import Enemy
+from entities.Player import Player
+from entities.Projectile import Projectile
 
 # screen
 SCREEN_WIDTH, SCREEN_HEIGHT = 800, 800
@@ -30,7 +30,7 @@ total_play_time = 0
 clock = pygame.time.Clock()
 frameLimiter = 0
 # Initial Player settings
-player_health = 100
+player_health = 10
 player_shoot_speed = 30
 player_dmg = 10
 
@@ -92,31 +92,24 @@ def enemy_event_handler():
     # Enemy event checker
     for enemy in enemies:
         if (Collision.player_hit_check(enemy, player)):
-            player.health -= enemy.dmg
-            player.color.g -= max(int(player.color.g * 0.2), 0)
-            player.color.b -= max(int(player.color.b * 0.2), 0)
+            player.damage_player(enemy.dmg)
             enemies.pop(enemies.index(enemy))
         for bullet in playerBullets:
             if Collision.bullet_hit_check(enemy, bullet):
-                enemy.health -= player.dmg
-                # TODO figure out color correction
-                enemy.color.r -= max(int(enemy.color.r * 0.2), 0)
+                enemy.take_damage(player.dmg)
                 if enemy.health <= 0:
                     enemies.pop(enemies.index(enemy))
+                    player.score += enemy.score
                 playerBullets.pop(playerBullets.index(bullet))
                 break
         for bullet in enemyBullets:
             if Collision.bullet_hit_check(player, bullet):
-                # TODO player health drop
-                player.health -= enemy.dmg
-                player.color.g -= max(int(player.color.g * 0.2), 0)
-                player.color.b -= max(int(player.color.b * 0.2), 0)
+                player.damage_player(enemy.dmg)
                 enemyBullets.pop(enemyBullets.index(bullet))
                 break
 
         if (random.randint(0, 1)):
             Projectile.bullet_spawn(enemyBullets, frameLimiter, enemy, 1)
-
         enemy.movement_method()
     Enemy.border_pop(enemies)
 
