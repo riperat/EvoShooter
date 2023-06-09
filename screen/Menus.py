@@ -3,7 +3,7 @@ import pygame
 import sys
 
 pygame.font.init()
-green = (255, 255, 255)
+white = (255, 255, 255)
 inside_pause_menu = False
 inside_death_menu = False
 
@@ -15,7 +15,7 @@ width, height = 800, 600
 # Define the button properties
 button_width, button_height = 200, 50
 button_color = pygame.Color(100, 100, 100)
-button_font = pygame.font.Font(None, 30)
+button_font = pygame.font.Font("fonts/Grand9K Pixel.ttf", 20)
 bottom_button_rect = pygame.Rect(width // 2 - button_width // 2,
                                  height // 2 - button_height // 2 + 100, button_width,
                                  button_height)
@@ -23,8 +23,8 @@ bottom_button_rect = pygame.Rect(width // 2 - button_width // 2,
 top_button_rect = pygame.Rect(width // 2 - button_width // 2, height // 2 - button_height // 2,
                               button_width, button_height)
 
-game_over_font = pygame.font.Font(None, 100)
-game_over_text = game_over_font.render('Game Over', True, green)
+game_over_font = pygame.font.Font("fonts/Grand9K Pixel.ttf" , 80)
+game_over_text = game_over_font.render('Game Over', True, white)
 
 game_over_Rect = game_over_text.get_rect()
 
@@ -44,6 +44,10 @@ def event_happener(method_to_run):
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     mouse_pos = pygame.mouse.get_pos()
                     if bottom_button_rect.collidepoint(mouse_pos):
+                        inside_death_menu = not inside_death_menu
+                        return False
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_r:
                         inside_death_menu = not inside_death_menu
                         return False
             if inside_pause_menu:

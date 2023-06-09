@@ -1,7 +1,5 @@
 import pygame
 
-from Collision import Collision
-
 
 class Projectile:
 

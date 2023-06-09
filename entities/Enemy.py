@@ -9,7 +9,7 @@ class Enemy:
     flagX = True
     flagY = 0
 
-    def __init__(self, X, Y, vel, health, shoot_speed, dmg):
+    def __init__(self, X, Y, vel, health, shoot_speed, dmg, score):
         self.max_health = health
         self.health = health
         self.shootSpead = shoot_speed
@@ -20,6 +20,7 @@ class Enemy:
         self.color = pygame.Color(255, 0, 3)
         self.movement_method = self.choose_movement_method()
         self.body = None
+        self.score = score
 
     def draw(self, screen):
         pygame.draw.circle(screen, self.color, (self.X, self.Y), self.sizeX)
@@ -82,11 +83,13 @@ class Enemy:
         # Call the chosen movement method
         self.movement_method()
 
+    def take_damage(self, dmg):
+        self.health -= dmg
+        self.color.r -= max(int(self.color.r * 0.2), 0)
+
     def enemy_spawn(enemies, vel, enemiesOnScreen):
         enemy_direction = lambda x: 0 if x == 0 else 800 if x == 1 else None
 
-        movement_list = [Enemy.moon_swing_motion, Enemy.sine_swing_motion]
-
         if len(enemies) < enemiesOnScreen:
             enemies.append(
-                Enemy(enemy_direction(random.randint(0, 1)), random.randint(0, 500), vel, 50, 300, 10))
+                Enemy(enemy_direction(random.randint(0, 1)), random.randint(0, 500), vel, 50, 300, 10, 10))
