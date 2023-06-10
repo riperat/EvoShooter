@@ -4,7 +4,7 @@ import pygame
 
 import sys
 
-from screen import Menus
+from screen import Menus, UpdateShop
 from Collision import Collision
 from entities.Enemy import Enemy
 from entities.Player import Player
@@ -31,7 +31,7 @@ clock = pygame.time.Clock()
 frameLimiter = 0
 # Initial Player settings
 player_health = 10
-player_shoot_speed = 30
+player_shoot_speed = 100
 player_dmg = 10
 
 player = Player(player_health, player_shoot_speed, player_dmg)
@@ -49,7 +49,8 @@ enemy_direction = lambda x: 0 if x == 0 else SCREEN_WIDTH if x == 1 else None
 
 
 def restart_game():
-    global flagX, flagY, started_game, pause, clock, frameLimiter, player, enemies, playerBullets, enemyBullets, total_play_time
+    global flagX, flagY, started_game, pause, clock, frameLimiter, player, enemies, playerBullets, enemyBullets, \
+        total_play_time, player_dmg, player_shoot_speed, player_health
     flagX = True
     flagY = True
     started_game = True
@@ -57,6 +58,9 @@ def restart_game():
 
     frameLimiter = 0
     total_play_time = 0
+    player_health = player.health
+    player_shoot_speed = player.shootSpead
+    player_dmg = player.dmg
     player = Player(player_health, player_shoot_speed, player_dmg)
 
     enemies = []
@@ -99,7 +103,7 @@ def enemy_event_handler():
                 enemy.take_damage(player.dmg)
                 if enemy.health <= 0:
                     enemies.pop(enemies.index(enemy))
-                    player.score += enemy.score
+                    player.coins += enemy.coins
                 playerBullets.pop(playerBullets.index(bullet))
                 break
         for bullet in enemyBullets:
@@ -133,7 +137,8 @@ def start_engine():
                 if event.key == pygame.K_r:
                     started_game = not started_game
         if pause:
-            Menus.event_happener(Menus.pause_menu(screen))
+            # Menus.event_happener(Menus.pause_menu(screen))
+            UpdateShop.shop_menu(screen, player)
             pause = not pause
 
         if player.health <= 0:

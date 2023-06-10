@@ -1,3 +1,5 @@
+import os
+
 import pygame
 
 import sys
@@ -15,7 +17,7 @@ width, height = 800, 600
 # Define the button properties
 button_width, button_height = 200, 50
 button_color = pygame.Color(100, 100, 100)
-button_font = pygame.font.Font("../fonts/Grand9K Pixel.ttf", 20)
+button_font = pygame.font.Font("fonts/Grand9K Pixel.ttf", 20)
 bottom_button_rect = pygame.Rect(width // 2 - button_width // 2,
                                  height // 2 - button_height // 2 + 100, button_width,
                                  button_height)
@@ -23,7 +25,7 @@ bottom_button_rect = pygame.Rect(width // 2 - button_width // 2,
 top_button_rect = pygame.Rect(width // 2 - button_width // 2, height // 2 - button_height // 2,
                               button_width, button_height)
 
-game_over_font = pygame.font.Font("../fonts/Grand9K Pixel.ttf", 80)
+game_over_font = pygame.font.Font("fonts/Grand9K Pixel.ttf", 80)
 game_over_text = game_over_font.render('Game Over', True, white)
 
 game_over_Rect = game_over_text.get_rect()

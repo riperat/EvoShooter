@@ -9,7 +9,7 @@ class Enemy:
     flagX = True
     flagY = 0
 
-    def __init__(self, X, Y, vel, health, shoot_speed, dmg, score):
+    def __init__(self, X, Y, vel, health, shoot_speed, dmg, coins):
         self.max_health = health
         self.health = health
         self.shootSpead = shoot_speed
@@ -20,7 +20,7 @@ class Enemy:
         self.color = pygame.Color(255, 0, 3)
         self.movement_method = self.choose_movement_method()
         self.body = None
-        self.score = score
+        self.coins = coins
 
     def draw(self, screen):
         pygame.draw.circle(screen, self.color, (self.X, self.Y), self.sizeX)
