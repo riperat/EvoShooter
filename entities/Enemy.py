@@ -73,10 +73,8 @@ class Enemy:
     def choose_movement_method(self):
         # Randomly choose between method 1 and method 2 during initialization
         if random.randint(0, 1) == 0:
-            print("sine")
             return self.sine_swing_motion
         else:
-            print("moon")
             return self.moon_swing_motion
 
     def movement_method(self):

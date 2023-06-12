@@ -1,3 +1,4 @@
+import importlib
 import random
 
 import pygame
@@ -5,10 +6,10 @@ import pygame
 import sys
 
 from screen import Menus, UpdateShop
-from Collision import Collision
 from entities.Enemy import Enemy
 from entities.Player import Player
 from entities.Projectile import Projectile
+from util.Collision import Collision
 
 # screen
 SCREEN_WIDTH, SCREEN_HEIGHT = 800, 800
@@ -51,6 +52,10 @@ enemy_direction = lambda x: 0 if x == 0 else SCREEN_WIDTH if x == 1 else None
 def restart_game():
     global flagX, flagY, started_game, pause, clock, frameLimiter, player, enemies, playerBullets, enemyBullets, \
         total_play_time, player_dmg, player_shoot_speed, player_health
+
+    module = importlib.import_module("screen.UpdateShop")
+    importlib.reload(module)
+
     flagX = True
     flagY = True
     started_game = True
@@ -58,9 +63,6 @@ def restart_game():
 
     frameLimiter = 0
     total_play_time = 0
-    player_health = player.health
-    player_shoot_speed = player.shootSpead
-    player_dmg = player.dmg
     player = Player(player_health, player_shoot_speed, player_dmg)
 
     enemies = []
@@ -122,6 +124,8 @@ def start_engine():
     global started_game, time_elapsed_since_last_action, pause, frameLimiter, total_play_time
     redraw_game_window()
     while started_game:
+        if started_game == 0:
+            break
         dt = clock.tick(FPS)
         total_play_time += dt
         time_elapsed_since_last_action += dt
@@ -144,14 +148,12 @@ def start_engine():
         if player.health <= 0:
             started_game = Menus.event_happener(Menus.death_menu(screen))
 
-        if started_game == 0:
-            break
         # player movement
         frameLimiter = (frameLimiter + 1) % FPS
 
         player.X += ((keys[pygame.K_RIGHT] - keys[pygame.K_LEFT]) * 1)
         player.Y += ((keys[pygame.K_DOWN] - keys[pygame.K_UP]) * 1)
-
+        print(player.shootSpead)
         # Collision check
         Collision.border_colission_check(player, 1, 1)
         Projectile.bullet_spawn(playerBullets, frameLimiter, player, -1)

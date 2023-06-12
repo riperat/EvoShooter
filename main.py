@@ -1,8 +1,6 @@
 import pygame
 
-import Engine
-
-
+from util import Engine
 
 while True:
     pygame.init()

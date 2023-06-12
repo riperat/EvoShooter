@@ -1,8 +1,4 @@
-import os
-
 import pygame
-
-import sys
 
 pygame.font.init()
 white = (255, 255, 255)
@@ -46,7 +42,7 @@ health_label = font.render(health_text, True, WHITE)
 body_label = font.render(body_text, True, WHITE)
 
 
-def shop_menu(screen, player):
+def shop_menu(screen, playerEntity):
     global speed_label, attack_label, health_label, body_label
     running = True
     while running:
@@ -63,23 +59,29 @@ def shop_menu(screen, player):
 
                 if button_x <= mouse_x <= button_x + button_width:
                     if button_y <= mouse_y <= button_y + button_height and len(speed_rects) < 7:
+                        if len(speed_rects) == 6:
+                            speed_label = font.render("Sold out", True, WHITE)
                         rect_x = button_x + len(speed_rects) * (rect_spacing + 10)
-                        speed_label = font.render("Sold out", True, WHITE)
                         speed_rects.append(pygame.Rect(rect_x, button_y - 10, 10, 10))
-                        player.shootSpead -= 10
+                        playerEntity.shootSpead -= 10
 
-                    if button_y + 70 <= mouse_y <= button_y + 70 + button_height and len(attack_rects) >= 7:
-                        attack_label = font.render("Sold out", True, WHITE)
+                    if button_y + 70 <= mouse_y <= button_y + 70 + button_height and len(attack_rects) < 7:
+                        if len(attack_rects) == 6:
+                            attack_label = font.render("Sold out", True, WHITE)
                         rect_x = button_x + len(attack_rects) * (rect_spacing + 10)
                         attack_rects.append(pygame.Rect(rect_x, button_y + 70 - 10, 10, 10))
+                        playerEntity.dmg += 10
 
-                    if button_y + 140 <= mouse_y <= button_y + 140 + button_height and len(health_rects) >= 7:
-                        health_label = font.render("Sold out", True, WHITE)
+                    if button_y + 140 <= mouse_y <= button_y + 140 + button_height and len(health_rects) < 7:
+                        if len(health_rects) == 6:
+                            health_label = font.render("Sold out", True, WHITE)
                         rect_x = button_x + len(health_rects) * (rect_spacing + 10)
                         health_rects.append(pygame.Rect(rect_x, button_y + 140 - 10, 10, 10))
+                        playerEntity.health += 10
 
-                    if button_y + 210 <= mouse_y <= button_y + 210 + button_height and len(body_rects) >= 7:
-                        body_label = font.render("Sold out", True, WHITE)
+                    if button_y + 210 <= mouse_y <= button_y + 210 + button_height and len(body_rects) < 7:
+                        if len(body_rects) == 6:
+                            body_label = font.render("Sold out", True, WHITE)
                         rect_x = button_x + len(body_rects) * (rect_spacing + 10)
                         body_rects.append(pygame.Rect(rect_x, button_y + 210 - 10, 10, 10))
 
