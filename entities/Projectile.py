@@ -32,4 +32,4 @@ class Projectile:
                 bullets.pop(bullets.index(bullet))
         if shoot == 0:
             bullets.append(
-                Projectile(shooter.X + 20, shooter.Y, vel))
+                Projectile(shooter.X + (shooter.sizeX / 2), shooter.Y, vel))

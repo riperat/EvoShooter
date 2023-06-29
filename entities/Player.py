@@ -6,15 +6,17 @@ class Player:
     Y = 400
     sizeX = 40
     sizeY = 40
+    tower_one = False
+    tower_two = False
     font = pygame.font.Font("fonts/Grand9K Pixel.ttf", 20)
 
     def __init__(self, health, shootSpead, dmg):
-        self.body = None
+        self.body = pygame.Rect(self.X, self.Y, self.sizeX, self.sizeY)
         self.health = health
         self.shootSpead = shootSpead
         self.dmg = dmg
         self.color = pygame.Color(0, 168, 133)
-        self.coins = 0
+        self.coins = 10000
 
     def draw(self, screen):
         self.body = pygame.Rect(self.X, self.Y, self.sizeX, self.sizeY)
@@ -36,3 +38,7 @@ class Player:
         coins_rect = health_text.get_rect()
         coins_rect.center = (740, 20)
         screen.blit(coins_text, coins_rect)
+
+    def move_X(self, keys):
+        self.X += ((keys[pygame.K_RIGHT] - keys[pygame.K_LEFT]) * 1)
+        self.Y += ((keys[pygame.K_DOWN] - keys[pygame.K_UP]) * 1)
