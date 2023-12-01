@@ -4,7 +4,7 @@ import pygame
 
 font = pygame.font.Font("fonts/Grand9K Pixel.ttf", 20)
 
-level_time = [2, 3, 3, 3, 3000]
+level_time = [10, 30, 50, 300, 3000]
 
 current_level = 0
 

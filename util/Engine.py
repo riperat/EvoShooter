@@ -215,12 +215,13 @@ def start_engine():
 
         # Bullet spawn
         Projectile.bullet_spawn(playerBullets, frameLimiter, player, -1)
+        tower_one.move_X(keys)
+        tower_two.move_X(keys)
         if player.tower_one:
-            tower_one.move_X(keys)
             Collision.border_colission_check(tower_one, 1, 1)
             Projectile.bullet_spawn(tower_one_Bullets, frameLimiter, tower_one, -1)
         if player.tower_two:
-            tower_two.move_X(keys)
+
             Collision.border_colission_check(tower_two, 1, 1)
             Projectile.bullet_spawn(tower_two_Bullets, frameLimiter, tower_two, -1)
 
